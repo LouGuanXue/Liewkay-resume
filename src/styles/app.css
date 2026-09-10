@@ -1856,13 +1856,44 @@ html:not(.motion-ready) .openingVeil {
     padding: 16px 18px;
   }
 
+  /* 关键数据保留桌面的多栏节奏：手机端两栏两行，不再塌成四行单列。
+     数字与内边距同步收窄，保证 ¥220.39 万这类最长数值不折行 */
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
   .stat {
-    padding: 22px 20px;
+    padding: 18px 15px;
+  }
+
+  .stat__num {
+    font-size: clamp(26px, 7.2vw, 34px);
+  }
+
+  .stat__prefix {
+    font-size: 15px;
+  }
+
+  .stat__suffix {
+    font-size: 12px;
+    margin-left: 1px;
+  }
+
+  .stat__label {
+    margin-top: 8px;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  /* 教育区四张卡片改两栏，与桌面的四栏呼应；内容均为标签，窄栏下自然换行 */
+  .edu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .projects,
   .caps,
-  .edu,
   .pillars {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2248,15 +2279,51 @@ html[data-theme='light'] .hero__play {
     margin-bottom: 16px;
   }
 
+  /* 头像放大到 88px，与同步放大的字标保持同一视觉重量 */
   .hero__portraitCircle {
-    width: 64px;
-    height: 64px;
+    width: 88px;
+    height: 88px;
+  }
+
+  /* 字标放大：桌面字号 158px、字宽占视口 43%，手机原本固定在 56px 显得单薄。
+     改为跟着视口推进，390px 下约 76px，字宽约 300px（内容区约 84%），接近桌面的体量 */
+  .hero__wordmark {
+    font-size: clamp(56px, 19.5vw, 96px);
   }
 
   /* 简介左缘回到常规内边距：375px 下正文可用宽度由约 291px 恢复到约 339px */
   .hero__intro {
     margin-top: clamp(22px, 4vh, 42px);
     padding-left: var(--shell-pad);
+  }
+
+  /* 底部行回到桌面的左右分栏构图：左 stat+CTA，右 引用与箭头 */
+  .hero__bottom {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: end;
+  }
+
+  .hero__bottomRight {
+    align-items: flex-end;
+    text-align: right;
+    gap: 6px;
+  }
+
+  .hero__quote {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .hero__quoteSub {
+    font-size: 11px;
+    max-width: 15ch;
+    line-height: 1.5;
+  }
+
+  .hero__arrowBig {
+    font-size: 22px;
+    margin-top: 2px;
   }
 
   /* 章节英文幽灵字：允许在空格处换行，避免窄屏被裁切 */
@@ -2446,7 +2513,7 @@ html[data-theme='light'] .hero__play {
   }
 
   .hero__quote {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   .hero__cta {

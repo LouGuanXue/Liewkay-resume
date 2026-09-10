@@ -7,7 +7,7 @@ import { gsap, motionEnabled } from '../motion/motion';
 const LETTERS = ['L', 'I', 'E', 'W', 'K', 'A', 'Y'];
 /* 背景视频自托管于 public/，BASE_URL 前缀保证 GitHub Pages 子路径部署下同样可用 */
 const VIDEO_SRC = `${import.meta.env.BASE_URL}hero-bg.mp4`;
-const SENSITIVITY = 0.8;
+/* 桌面与手机共用同一套首屏参数，保证两端看到的是同一段画面、同一种节奏 */
 const MOBILE_QUERY = '(max-width: 860px)';
 
 export default function Hero() {
@@ -16,16 +16,6 @@ export default function Hero() {
   const rootRef = useRef(null);
   const videoRef = useRef(null);
   const [videoOk, setVideoOk] = useState(true);
-  /* 手机端与桌面端均直接挂载视频；手机端 muted + playsInline 自动循环播放，无需点击 */
-  const [isMobile, setIsMobile] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
-  );
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const onChange = (event) => setIsMobile(event.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   const handleRipple = (event) => {
     if (reduced) return;
@@ -38,61 +28,28 @@ export default function Hero() {
     node.classList.add('is-rippling');
   };
 
-  /* 背景视频：按鼠标横向位移前后擦洗，seek 串行化避免抖动（仅桌面，手机走自动循环） */
+  /* 背景视频：桌面与手机统一为静音自动循环，两端看到的是同一段画面。
+     保留 8 秒元数据兜底，拿不到就判定不可用，回落到渐变画布 */
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !videoOk || isMobile) return undefined;
+    if (!video || !videoOk) return undefined;
 
-    let targetTime = 0;
-    let seeking = false;
-    let prevX = null;
-
-    const applySeek = () => {
-      if (seeking || !video.duration) return;
-      if (Math.abs(video.currentTime - targetTime) < 0.01) return;
-      seeking = true;
-      video.currentTime = targetTime;
-    };
-
-    const onSeeked = () => {
-      seeking = false;
-      applySeek();
-    };
-
-    const onLoaded = () => {
-      targetTime = video.duration * 0.12;
-      video.currentTime = targetTime;
-    };
-
-    const onMove = (event) => {
-      if (prevX === null) {
-        prevX = event.clientX;
-        return;
-      }
-      const delta = event.clientX - prevX;
-      prevX = event.clientX;
-      if (!video.duration) return;
-      targetTime += (delta / window.innerWidth) * SENSITIVITY * video.duration;
-      targetTime = Math.min(Math.max(targetTime, 0), video.duration);
-      applySeek();
-    };
-
-    // 8 秒仍拿不到元数据就判定视频不可用，保留渐变画布
     const failTimer = setTimeout(() => {
       if (!video.duration) setVideoOk(false);
     }, 8000);
 
-    video.addEventListener('seeked', onSeeked);
-    video.addEventListener('loadedmetadata', onLoaded);
-    window.addEventListener('mousemove', onMove);
+    // 部分浏览器存在自动播放策略拦截，兜底再试一次并忽略失败
+    const tryPlay = () => {
+      const p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    };
+    video.addEventListener('loadeddata', tryPlay);
 
     return () => {
       clearTimeout(failTimer);
-      video.removeEventListener('seeked', onSeeked);
-      video.removeEventListener('loadedmetadata', onLoaded);
-      window.removeEventListener('mousemove', onMove);
+      video.removeEventListener('loadeddata', tryPlay);
     };
-  }, [videoOk, isMobile]);
+  }, [videoOk]);
 
   /* 首屏 Opening：幕布定格 → 上掀 → 字母压缩归位 → 头像圆形揭开 → 逐行简介 → 底部进场
      时间线同步构建（paused），字体就绪后再 play，规避 StrictMode 挂载竞态 */
@@ -196,11 +153,13 @@ export default function Hero() {
   }, []);
 
   /* 滚动视差：头像块下沉、wordmark 上漂、简介轻移，scrub 跟手。
-     手机端跳过：头像已回到文档流，位移会压到字标，且触屏上 scrub 视差纯属负担 */
+     桌面与手机同源同向：字标与简介用同一组百分比，头像在手机端处在文档流里，
+     幅度从 30% 收到 20%。手机端头像底到字标顶只有 36px 余量，
+     20% 下沉约 18px 配合字标上移 10px 仍留有安全间距 */
   useLayoutEffect(() => {
     if (!motionEnabled()) return undefined;
-    if (window.matchMedia(MOBILE_QUERY).matches) return undefined;
     const root = rootRef.current;
+    const narrow = window.matchMedia(MOBILE_QUERY).matches;
 
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(root);
@@ -211,7 +170,10 @@ export default function Hero() {
         scrub: 0.6,
         ease: 'none',
       };
-      gsap.to(q('.hero__portraitBlock'), { yPercent: 30, scrollTrigger: common });
+      gsap.to(q('.hero__portraitBlock'), {
+        yPercent: narrow ? 20 : 30,
+        scrollTrigger: common,
+      });
       gsap.to(q('.hero__wordmarkWrap'), { yPercent: -16, scrollTrigger: common });
       gsap.to(q('.hero__intro'), { yPercent: 10, scrollTrigger: common });
     }, root);
@@ -237,8 +199,8 @@ export default function Hero() {
             src={VIDEO_SRC}
             muted
             playsInline
-            autoPlay={isMobile}
-            loop={isMobile}
+            autoPlay
+            loop
             preload="auto"
             onError={() => setVideoOk(false)}
             onLoadedData={(event) => event.currentTarget.classList.add('is-ready')}
