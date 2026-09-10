@@ -1,0 +1,100 @@
+.chroma-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #2a2a2a;
+  background: var(--card-gradient);
+  cursor: var(--card-cursor, default);
+  transition:
+    border-color 0.32s var(--ease),
+    transform 0.32s var(--ease),
+    box-shadow 0.32s var(--ease);
+
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chroma-card:hover {
+    border-color: var(--card-border);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.chroma-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chroma-card:hover::before {
+    opacity: 1;
+  }
+}
+
+/* 触屏：常亮柔和边框 + 轻聚光，按下加深（替代 hover 反馈） */
+@media (hover: none) {
+  .chroma-card {
+    border-color: color-mix(in srgb, var(--card-border, #2a2a2a) 52%, transparent);
+  }
+
+  .chroma-card::before {
+    opacity: 0.26;
+  }
+
+  .chroma-card:active {
+    transform: scale(0.992);
+  }
+
+  .chroma-card:active::before {
+    opacity: 0.46;
+  }
+}
+
+.chroma-img-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 10px 10px 0;
+  box-sizing: border-box;
+}
+
+.chroma-img-wrapper img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.chroma-card__body {
+  position: relative;
+  z-index: 1;
+  padding: 18px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  color: #ffffff;
+  font-family: system-ui, sans-serif;
+}
+
+.chroma-card__body > * {
+  min-width: 0;
+}

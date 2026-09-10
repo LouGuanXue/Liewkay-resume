@@ -1,0 +1,5 @@
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* 不引入 preflight，避免重置既有板块的排版。
+   站点字体令牌与全部排版集中在 app.css（在其之后加载，优先生效）。 */
