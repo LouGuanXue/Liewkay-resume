@@ -30,22 +30,6 @@ export default function Education() {
             <ThemedCard
               as="article"
               className="edu__card"
-              gradient={accentByIndex(1).gradient}
-              borderColor={accentByIndex(1).borderColor}
-            >
-              <span className="edu__label">荣誉与证书</span>
-              <ul className="chips">
-                {education.honors.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </ThemedCard>
-          </Reveal>
-
-          <Reveal delay={180}>
-            <ThemedCard
-              as="article"
-              className="edu__card"
               gradient={accentByIndex(2).gradient}
               borderColor={accentByIndex(2).borderColor}
             >
@@ -58,14 +42,14 @@ export default function Education() {
             </ThemedCard>
           </Reveal>
 
-          <Reveal delay={270}>
+          <Reveal delay={180}>
             <ThemedCard
               as="article"
               className="edu__card"
               gradient={accentByIndex(3).gradient}
               borderColor={accentByIndex(3).borderColor}
             >
-              <span className="edu__label">其他</span>
+              <span className="edu__label">爱好</span>
               <ul className="chips">
                 {education.hobby.map((item) => (
                   <li key={item}>{item}</li>
