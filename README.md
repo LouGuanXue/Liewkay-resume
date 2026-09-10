@@ -112,7 +112,13 @@ resume-site/
 
 ## 首屏视频
 
-首屏是全幅视频构图，视频层固定在文字与界面之下。桌面端与手机端行为完全一致：静音自动循环播放，不再区分擦洗与点击触发的差异。
+首屏是全幅视频构图，视频层固定在文字与界面之下。两端行为按输入方式区分，同一份视频源。
+
+**桌面端**：视频保持暂停，画面完全由鼠标横向位移驱动。鼠标横穿整个窗口约走完 80% 的片子（`SENSITIVITY = 0.8`），视频从 12% 帧起步定格。`mousemove` 累加 `targetTime`，seek 用 `seeking` 标志串行化，避免连续 seek 造成抖动。鼠标静止时画面不动。
+
+**手机端**：`autoPlay` 加 `loop`、`muted` 加 `playsInline`，静音自动循环。依据是 `matchMedia('(max-width: 860px)')`，窗口跨过 860px 时会实时切换，桌面端分支会先 `pause()` 再接管。
+
+未填 `heroVideo` 时两端的差异在于驱动方式，视频源本身相同。
 
 **编码要求（重要）**：视频必须是 H.264（fourcc `avc1`，8 位 `yuv420p`）。用 10 位 HEVC（`hvc1` / `yuv420p10le`）会导致安卓 Chrome、微信安卓内核、未安装 HEVC 扩展的桌面 Chromium 全部抛 `DEMUXER_ERROR_NO_SUPPORTED_STREAMS`，视频被判定不可用并回退到渐变画布，首屏只剩红底。仓库内的 `tools/transcode_hero.py` 负责转换并自带自检：
 

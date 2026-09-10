@@ -7,7 +7,10 @@ import { gsap, motionEnabled } from '../motion/motion';
 const LETTERS = ['L', 'I', 'E', 'W', 'K', 'A', 'Y'];
 /* 背景视频自托管于 public/，BASE_URL 前缀保证 GitHub Pages 子路径部署下同样可用 */
 const VIDEO_SRC = `${import.meta.env.BASE_URL}hero-bg.mp4`;
-/* 桌面与手机共用同一套首屏参数，保证两端看到的是同一段画面、同一种节奏 */
+/* 桌面端擦洗系数：鼠标横向位移占窗口宽度的比例乘以它，即为走过的片长比例。
+   0.8 表示鼠标横穿整个窗口约走完 80% 的片子 */
+const SENSITIVITY = 0.8;
+/* 手机端判定。860px 以下静音自动循环，及以上走鼠标擦洗定格 */
 const MOBILE_QUERY = '(max-width: 860px)';
 
 export default function Hero() {
@@ -16,6 +19,16 @@ export default function Hero() {
   const rootRef = useRef(null);
   const videoRef = useRef(null);
   const [videoOk, setVideoOk] = useState(true);
+  /* 两端都直接挂载视频；手机端 muted + playsInline 自动循环，桌面端不自动播放，等鼠标擦洗驱动 */
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const onChange = (event) => setIsMobile(event.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   const handleRipple = (event) => {
     if (reduced) return;
@@ -28,8 +41,8 @@ export default function Hero() {
     node.classList.add('is-rippling');
   };
 
-  /* 背景视频：桌面与手机统一为静音自动循环，两端看到的是同一段画面。
-     保留 8 秒元数据兜底，拿不到就判定不可用，回落到渐变画布 */
+  /* 背景视频：桌面端按鼠标横向位移前后擦洗，seek 串行化避免抖动，从 12% 帧起步定格；
+     手机端静音自动循环。两端共用 8 秒元数据兜底，拿不到就回退渐变画布 */
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !videoOk) return undefined;
@@ -38,18 +51,68 @@ export default function Hero() {
       if (!video.duration) setVideoOk(false);
     }, 8000);
 
-    // 部分浏览器存在自动播放策略拦截，兜底再试一次并忽略失败
-    const tryPlay = () => {
-      const p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(() => {});
+    if (isMobile) {
+      // 部分浏览器存在自动播放策略拦截，兜底再试一次并忽略失败
+      const tryPlay = () => {
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      };
+      video.addEventListener('loadeddata', tryPlay);
+
+      return () => {
+        clearTimeout(failTimer);
+        video.removeEventListener('loadeddata', tryPlay);
+      };
+    }
+
+    /* 桌面端：视频保持暂停，画面完全由鼠标横向位移驱动 */
+    video.pause();
+
+    let targetTime = 0;
+    let seeking = false;
+    let prevX = null;
+
+    const applySeek = () => {
+      if (seeking || !video.duration) return;
+      if (Math.abs(video.currentTime - targetTime) < 0.01) return;
+      seeking = true;
+      video.currentTime = targetTime;
     };
-    video.addEventListener('loadeddata', tryPlay);
+
+    const onSeeked = () => {
+      seeking = false;
+      applySeek();
+    };
+
+    const onLoaded = () => {
+      targetTime = video.duration * 0.12;
+      video.currentTime = targetTime;
+    };
+
+    const onMove = (event) => {
+      if (prevX === null) {
+        prevX = event.clientX;
+        return;
+      }
+      const delta = event.clientX - prevX;
+      prevX = event.clientX;
+      if (!video.duration) return;
+      targetTime += (delta / window.innerWidth) * SENSITIVITY * video.duration;
+      targetTime = Math.min(Math.max(targetTime, 0), video.duration);
+      applySeek();
+    };
+
+    video.addEventListener('seeked', onSeeked);
+    video.addEventListener('loadedmetadata', onLoaded);
+    window.addEventListener('mousemove', onMove);
 
     return () => {
       clearTimeout(failTimer);
-      video.removeEventListener('loadeddata', tryPlay);
+      video.removeEventListener('seeked', onSeeked);
+      video.removeEventListener('loadedmetadata', onLoaded);
+      window.removeEventListener('mousemove', onMove);
     };
-  }, [videoOk]);
+  }, [videoOk, isMobile]);
 
   /* 首屏 Opening：幕布定格 → 上掀 → 字母压缩归位 → 头像圆形揭开 → 逐行简介 → 底部进场
      时间线同步构建（paused），字体就绪后再 play，规避 StrictMode 挂载竞态 */
@@ -199,8 +262,8 @@ export default function Hero() {
             src={VIDEO_SRC}
             muted
             playsInline
-            autoPlay
-            loop
+            autoPlay={isMobile}
+            loop={isMobile}
             preload="auto"
             onError={() => setVideoOk(false)}
             onLoadedData={(event) => event.currentTarget.classList.add('is-ready')}
