@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">小智 AI · 轻量化陪伴终端</title>
+<desc id="desc">中央 AI 模组连接毛绒玩具、挂脖玩具、口袋伴侣和桌面终端，下方展示语音互动、情感陪伴和记忆训练。</desc>
+<defs><marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M3 2l7 4-7 4" fill="none" stroke="#8b8b86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect width="1200" height="760" fill="#fff"/>
+<g font-family="Arial, 'Microsoft YaHei', sans-serif" fill="#242422">
+<text x="64" y="67" font-size="30" font-weight="700">小智 AI</text>
+<text x="64" y="100" font-size="16" fill="#777772">轻量化陪伴终端 · 一个模组，多种陪伴形态</text>
+<path d="M64 128H1136" stroke="#e4e4df"/>
+<!-- Symmetric connectors sit behind the terminal cards. -->
+<g fill="none" stroke="#8b8b86" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)">
+<path d="M478 324C424 324 426 257 363 257"/><path d="M722 324C776 324 774 257 837 257"/>
+<path d="M478 390C424 390 426 463 363 463"/><path d="M722 390C776 390 774 463 837 463"/>
+</g>
+<g fill="#fafaf8" stroke="#e5e5df" stroke-width="1.5">
+<rect x="76" y="174" width="272" height="178" rx="20"/><rect x="852" y="174" width="272" height="178" rx="20"/>
+<rect x="76" y="380" width="272" height="178" rx="20"/><rect x="852" y="380" width="272" height="178" rx="20"/>
+</g>
+<!-- Plush companion: soft ears, face panel and seated body. -->
+<g fill="none" stroke="#343432" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M179 216c-16-15-29 3-19 18m85-18c16-15 29 3 19 18"/>
+<rect x="168" y="207" width="88" height="64" rx="25"/>
+<path d="M184 226h56v28h-56z" stroke-width="2"/>
+<path d="M195 237q3-6 6 0m22 0q3-6 6 0m-24 8q7 7 14 0" stroke-width="2"/>
+<path d="M188 274q-9 9-9 20h66q0-11-9-20m-54 10-12 10m72-10 12 10"/>
+<!-- Neck-worn toy: loop, compact rounded pendant. -->
+<path d="M968 241c-38-64 78-64 40 0"/>
+<rect x="964" y="239" width="48" height="55" rx="18"/>
+<path d="M978 258h0m20 0h0m-21 12q11 9 22 0"/>
+<!-- Pocket companion: small rounded device and a carrying loop. -->
+<path d="M197 418v-7q0-12 15-12t15 12v7"/>
+<rect x="177" y="420" width="70" height="77" rx="19"/>
+<rect x="189" y="433" width="46" height="34" rx="10" stroke-width="2"/>
+<path d="M201 447h0m22 0h0m-20 9q9 5 18 0m-16 26h14" stroke-width="2"/>
+<!-- Desktop terminal: angled stand, display and friendly eyes. -->
+<rect x="943" y="415" width="90" height="65" rx="16"/>
+<path d="M960 441q7-10 14 0m27 0q7-10 14 0m-35 15q9 7 18 0" stroke-width="2.5"/>
+<path d="M977 483l-5 13h32l-5-13m-40 14h57"/>
+</g>
+<g text-anchor="middle" font-size="21" font-weight="600"><text x="212" y="326">毛绒玩具</text><text x="988" y="326">挂脖玩具</text><text x="212" y="532">口袋伴侣</text><text x="988" y="532">桌面终端</text></g>
+<!-- Core module. -->
+<rect x="478" y="266" width="244" height="192" rx="26" fill="#252523"/>
+<g fill="none" stroke="#d5d5cc" stroke-width="2" stroke-linecap="round"><rect x="575" y="288" width="50" height="39" rx="8"/><path d="M586 297h28v21h-28zM586 283v5m14-5v5m14-5v5m-28 39v5m14-5v5m14-5v5M569 300h6m-6 15h6m50-15h6m-6 15h6"/></g>
+<text x="600" y="377" text-anchor="middle" fill="#fff" font-size="30" font-weight="600">AI 模组</text>
+<text x="600" y="412" text-anchor="middle" fill="#bdbdb4" font-size="15">连接不同终端形态</text>
+<!-- Unified capability strip. -->
+<path d="M64 596H1136" stroke="#e4e4df"/>
+<g fill="none" stroke="#494945" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+<rect x="210" y="637" width="14" height="25" rx="7"/><path d="M203 654v3a14 14 0 0 0 28 0v-3m-14 17v9m-8 0h16"/>
+<path d="M570 646c-14-19-37 0 0 26 37-26 14-45 0-26z"/>
+<path d="M919 640h-19a7 7 0 0 0-7 7v23a7 7 0 0 0 7 7h19m-18-27h24m-24 9h18m-18 9h24m-7-35v12m-6-6h12"/>
+</g>
+<g font-size="20" font-weight="600"><text x="250" y="659">语音互动</text><text x="605" y="659">情感陪伴</text><text x="952" y="659">记忆训练</text></g>
+<g font-size="13" fill="#85857e"><text x="250" y="683">用对话建立连接</text><text x="605" y="683">让交流更有温度</text><text x="952" y="683">陪伴日常练习</text></g>
+</g></svg>

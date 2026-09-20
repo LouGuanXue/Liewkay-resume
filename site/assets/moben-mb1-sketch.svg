@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">墨本 MB-1 外观与功能简笔示意</title>
+  <desc id="desc">墨本 MB-1 简笔图：正面为左键、中央语音键和右键，左侧为菜单键，底部为 Type-C 充电口。按住语音键提问，松手获取回答。</desc>
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M3 2l7 4-7 4" fill="none" stroke="#8b8b86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1200" height="760" fill="#fff"/>
+  <g fill="none" stroke="#1e1e1e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 92 H1130" stroke="#e4e4df" stroke-width="1"/>
+    <rect x="465" y="150" width="270" height="445" rx="30"/>
+    <rect x="485" y="174" width="230" height="320" rx="12" fill="#f7f7f5" stroke-width="3"/>
+    <path d="M526 304h148M526 332h148M526 352h112M526 372h132M526 392h84" stroke="#aaa" stroke-width="4"/>
+    <rect x="500" y="533" width="34" height="23" rx="11" stroke-width="3"/>
+    <rect x="548" y="514" width="104" height="62" rx="31" stroke-width="3"/>
+    <path d="M578 533h44M574 544h52M578 555h44" stroke="#888" stroke-width="2"/>
+    <rect x="666" y="533" width="34" height="23" rx="11" stroke-width="3"/>
+    <rect x="455" y="526" width="10" height="41" rx="5" stroke-width="3"/>
+    <rect x="581" y="595" width="38" height="8" rx="4" stroke-width="3"/>
+    <path d="M455 546h-48M600 603v22" stroke-width="2" stroke-dasharray="4 5"/>
+<g fill="#fafaf8" stroke="#e5e5df" stroke-width="1.5"><rect x="70" y="160" width="250" height="184" rx="20"/><rect x="880" y="160" width="250" height="184" rx="20"/><rect x="70" y="392" width="250" height="184" rx="20"/><rect x="880" y="392" width="250" height="184" rx="20"/></g>
+<g stroke="#8b8b86" stroke-width="2" marker-end="url(#arrowhead)"><path d="M435 270C391 270 385 252 335 252"/><path d="M765 270C809 270 815 252 865 252"/><path d="M435 464C391 464 385 484 335 484"/><path d="M765 464C809 464 815 484 865 484"/></g>
+<g stroke="#343432" stroke-width="3">
+<path d="M195 219q-20-13-43-8v53q23-5 43 8 20-13 43-8v-53q-23-5-43 8zM195 219v53"/><path d="M163 227q11-1 21 4m-21 9q11-1 21 4m22-13q10-5 21-4m-21 17q10-5 21-4" stroke-width="2"/>
+<rect x="992" y="203" width="26" height="45" rx="13"/><path d="M982 234v7a23 23 0 0 0 46 0v-7m-23 30v13m-12 0h24"/>
+<path d="M169 444h53a12 12 0 0 1 12 12v23a12 12 0 0 1-12 12h-28l-18 12v-12h-7a12 12 0 0 1-12-12v-23a12 12 0 0 1 12-12z"/><path d="M180 468h0m15 0h0m15 0h0M212 433q15 0 24 11m-19-22q21 2 31 18"/>
+<rect x="963" y="436" width="84" height="63" rx="12"/><path d="M976 479l17-17 14 12 12-9 16 14m-59-30h22" stroke-width="2.5"/></g>
+  </g>
+  <g fill="#1e1e1e" font-family="Arial, 'Microsoft YaHei', sans-serif">
+    <text x="70" y="62" font-size="28" font-weight="700">墨本 MB-1</text><text x="286" y="62" font-size="18">电子纸终端 · 外观与功能简笔示意</text>
+    <text x="600" y="274" text-anchor="middle" font-size="23" fill="#777">moben</text>
+<g text-anchor="middle" font-size="21" font-weight="600"><text x="195" y="312">专注阅读</text><text x="1005" y="303">按住提问</text><text x="195" y="547">联网对话</text><text x="1005" y="547">回答呈现</text></g><text x="1005" y="328" text-anchor="middle" font-size="13" fill="#85857e">松手获取回答</text>
+    <text x="517" y="585" text-anchor="middle" font-size="15">左键</text>
+    <text x="600" y="506" text-anchor="middle" font-size="15">语音键</text>
+    <text x="683" y="585" text-anchor="middle" font-size="15">右键</text>
+    <text x="398" y="550" text-anchor="end" font-size="18">菜单键</text>
+    <text x="600" y="647" text-anchor="middle" font-size="18">底部 Type-C 充电口</text>
+    <text x="600" y="682" text-anchor="middle" font-size="16" fill="#666">左右键翻页／菜单切换 · 菜单键短按返回／控制面板，长按开关机</text>
+  </g>
+</svg>
+
