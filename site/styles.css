@@ -67,3 +67,14 @@
  .about-content dd{font-size:14px}
 }
 
+@media(max-width:650px){
+ .tool-groups{grid-template-columns:1fr;gap:22px}
+ .tool-groups article{padding-top:17px}
+ .tool-groups h3{font-size:20px;line-height:1.5;overflow-wrap:anywhere}
+ .tool-number{margin-bottom:12px}
+ .numbers .numbers-note{line-height:1.8}
+ .numbers-note a{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:5px;text-decoration:underline;text-underline-offset:3px}
+}
+.numbers-note a{margin-left:8px;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.numbers-note a:focus-visible{outline:2px solid #555;outline-offset:4px}
+

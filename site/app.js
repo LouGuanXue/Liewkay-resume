@@ -2,7 +2,10 @@
 const introFinished = new Promise(resolve => {
  const intro=document.querySelector('#site-intro');
  const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
- if(!intro || preference.matches){intro?.remove();resolve();return;}
+ let alreadySeen=false;
+ try{alreadySeen=sessionStorage.getItem('siteIntroSeen')==='1';}catch{}
+ if(!intro || preference.matches || alreadySeen){intro?.remove();resolve();return;}
+ try{sessionStorage.setItem('siteIntroSeen','1');}catch{}
  const pageElements=[...document.body.children].filter(element=>element!==intro && !element.inert);
  pageElements.forEach(element=>element.inert=true);
  document.body.classList.add('intro-active');
